@@ -13,7 +13,11 @@ fn operate(first: f32, operator: char, second: f32) -> f32 {
 fn main() {
     // Get program arguments
     let mut args = args();
-
+    if args.len() != 4 {
+        println!("Usage: calculator FIRST OPERATOR SECOND");
+        println!("   Ex: calculator 3 + 5");
+        return
+    }
     // Pick first arg after binary path (which is skipped)
     let first_str = args.nth(1).unwrap();
 
