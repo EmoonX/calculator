@@ -1,19 +1,33 @@
 use std::env::args;
 
+fn operate(first: f32, operator: char, second: f32) -> f32 {
+    match operator {
+        '+'         => first + second,
+        '-'         => first - second,
+        '*'|'X'|'x' => first * second,
+        '/'         => first / second,
+        _ => panic!("Invalid operator used.")
+    }
+}
+
 fn main() {
     // Get program arguments
     let mut args = args();
 
     // Pick first arg after binary path (which is skipped)
-    let first = args.nth(1).unwrap();
+    let first_str = args.nth(1).unwrap();
 
     // Pick following args (iterator is resumed from last access)
-    let operator = args.nth(0).unwrap();
-    let second = args.nth(0).unwrap();
+    let operator_str = args.next().unwrap();
+    let second_str = args.next().unwrap();
 
-    // Parse number strings into floats (with "turbofish" help)
-    let first_number = first.parse::<f32>().unwrap();
-    let second_number = second.parse::<f32>().unwrap();
+    // Parse number strings into floats (with "turbofish" help);
+    // also parse operator string into single char.
+    let first = first_str.parse::<f32>().unwrap();
+    let operator = operator_str.chars().next().unwrap();
+    let second = second_str.parse::<f32>().unwrap();
 
-    println!("{} {} {}", first_number, operator, second_number);
+    // Calculate and print result
+    let result = operate(first, operator, second);
+    println!("{} {} {} = {}", first, operator, second, result);
 }
